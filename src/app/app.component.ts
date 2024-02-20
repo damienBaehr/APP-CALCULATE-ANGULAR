@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UnitOptions } from './interfaces/UnitOptions';
 import { Item } from './interfaces/Item';
-import { fromEvent } from 'rxjs';
 
 
 @Component({
@@ -21,39 +19,67 @@ import { fromEvent } from 'rxjs';
 
 export class AppComponent {
   title = 'APP-CALCULATE';
-
   defaultResult = 0;
   inputName: string = '';
   unitOptions: string[] = Object.values(UnitOptions);
-  selectedUnit: UnitOptions = UnitOptions.Unit;
+  selectedUnit: UnitOptions | undefined = UnitOptions.Unit;
   inputValue: string = '';
   result = '';
-
   items : Item[] = [];
+  rows = Object.keys(this.items)
+  csvContent = "data:text/csv;charset=utf-8,"
 
   constructor( ) { 
-    fromEvent(window, 'storage').subscribe((event) => {
       let items = localStorage.getItem("items");
       if(items){
         let parsedItems = JSON.parse(items)
         this.items = parsedItems
       }
-    });
+  }
+
+  exportCSV() {
+    let encodeUri = encodeURI(this.csvContent + ['title, ', 'quantity, ', 'unit'] + '\n' + this.items.map(e => e.name + ', ' + e.quantity + ', ' + e.unit).join('\n'));
+    let link = document.createElement('a');
+    link.setAttribute('href', encodeUri);
+    link.setAttribute('download', 'inventaire.csv');
+    document.body.appendChild(link);
+    link.click();
+  }
+
+  updateItem(item: Item) {
+    let index = this.items.findIndex(i => i.id === item.id);
+    const existingItem = this.items[index];
+    existingItem.name = item.name;
+    existingItem.quantity = item.quantity;
+    existingItem.unit = item.unit;
+    localStorage.setItem("items", JSON.stringify(this.items))
   }
 
   addToInput(value :string){
-    this.inputValue += value;
+    if (value === 'x') {
+      this.inputValue += '*';
+    } else {
+      this.inputValue += value;
+    }  
   }
   clearInput() {
     this.inputName='';
     this.inputValue = '';
     this.result = '';
   }
+  fillInputFields(item: Item) {
+    this.inputName = item.name;
+    this.inputValue = item.quantity.toString();
+    this.selectedUnit = item.unit;
+    this.result="";
+  }
+  scrollToCalculateSection() {
+    const calculateSection = document.getElementById('calculate');
+    if (calculateSection) {
+      calculateSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
   calculateResult() {
-    console.log('résultat ', this.result);
-    console.log('résultat', this.inputValue);
-    console.log('résultat', this.inputName);
-    console.log('résultat', this.selectedUnit);
     try {
       this.result = eval(this.inputValue);
         this.items.push({

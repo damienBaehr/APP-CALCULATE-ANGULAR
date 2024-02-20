@@ -1,54 +1,73 @@
 <main>
-    <div class="container">
+    <div class="navMenuMobile">
+        <div class="navMenuMobile-content">
+            <div class="navMenuMobile-content-item">
+                <a href="#calculate">Calculate</a>
+            </div>
+            <div class="navMenuMobile-content-item">
+                <a href="#inventory">Inventory</a>
+            </div>
+        </div>
+    </div>
+    <div id="calculate" class="container">
         <div class="entries">
-            <input id="articleName" type="text"[(ngModel)]="inputName">
-            <input id="operation" type="text" [(ngModel)]="inputValue">
+            <input placeholder="Nom de l'item" id="articleName" type="text"[(ngModel)]="inputName">
+            <input placeholder="Rentrez votre opération" id="operation" type="text" [(ngModel)]="inputValue">
             <div class="result">
                 <input type="text" readonly [(ngModel)]="result">
-                <select [(ngModel)]="selectedUnit">
-                    <option *ngFor="let option of unitOptions" [value]="option">{{option}}</option>
+                <select class="btn" [(ngModel)]="selectedUnit">
+                    <option class="btn" *ngFor="let option of unitOptions" [value]="option">{{option}}</option>
                 </select>
             </div>
         </div>
         <div class="grid">
-            <div (click)="addToInput('(')" data-index="(">(</div>
-            <div (click)="addToInput(')')" data-index=")">)</div>
-            <div (click)="clearInput()" data-index="AC">AC</div>
-            <div (click)="addToInput('%')" data-index="%">%</div>
-            <div (click)="addToInput('7')" data-index="7">7</div>
-            <div (click)="addToInput('8')" data-index="8">8</div>
-            <div (click)="addToInput('9')" data-index="9">9</div>
-            <div (click)="addToInput('*')" data-index="x">x</div>
-            <div (click)="addToInput('4')" data-index="4">4</div>
-            <div (click)="addToInput('5')" data-index="5">5</div>
-            <div (click)="addToInput('6')" data-index="6">6</div>
-            <div (click)="addToInput('-')" data-index="-">-</div>
-            <div (click)="addToInput('1')" data-index="1">1</div>
-            <div (click)="addToInput('2')" data-index="2">2</div>
-            <div (click)="addToInput('3')" data-index="3">3</div>
-            <div (click)="addToInput('+')" data-index="+">+</div>
-            <div (click)="addToInput('0')" data-index="0">0</div>
-            <div (click)="addToInput(',')" data-index=",">,</div>
-            <div (click)="calculateResult()"data-index="=">=</div>
-            <div>-></div>
+            <div (click)="addToInput('(')" class="btn" data-index="(">(</div>
+            <div (click)="addToInput(')')" class="btn" data-index=")">)</div>
+            <div (click)="clearInput()" class="btn" data-index="AC">AC</div>
+            <div (click)="addToInput('%')" class="btn functions" data-index="%">%</div>
+            <div (click)="addToInput('7')" class="btn" data-index="7">7</div>
+            <div (click)="addToInput('8')" class="btn" data-index="8">8</div>
+            <div (click)="addToInput('9')" class="btn" data-index="9">9</div>
+            <div (click)="addToInput('x')" class="btn functions" data-index="x">x</div>
+            <div (click)="addToInput('4')" class="btn" data-index="4">4</div>
+            <div (click)="addToInput('5')" class="btn" data-index="5">5</div>
+            <div (click)="addToInput('6')" class="btn" data-index="6">6</div>
+            <div (click)="addToInput('-')" class="btn functions" data-index="-">-</div>
+            <div (click)="addToInput('1')" class="btn" data-index="1">1</div>
+            <div (click)="addToInput('2')" class="btn" data-index="2">2</div>
+            <div (click)="addToInput('3')" class="btn" data-index="3">3</div>
+            <div (click)="addToInput('+')" class="btn functions" data-index="+">+</div>
+            <div (click)="addToInput('0')" class="btn" data-index="0">0</div>
+            <div (click)="addToInput(',')" class="btn" data-index=",">,</div>
+            <div (click)="calculateResult()" class="btn functions" data-index="=">=</div>
+            <div class="btn functions">-></div>
         </div>
     </div>
     <div class="separateur"></div>
+    
 
-    <div class="inventory">
-        <div class="inventory-header">
-            <h2>Inventory</h2>
-        </div>
-        <div class="inventory-content">
-            <div class="inventory-item" *ngFor="let item of items">
-                <div class="item">
-                    <p>{{item.name}}</p>
-                    <div class="itemSpec">
-                        <p>{{item.quantity}}</p>
-                        <p>{{item.unit}}</p>
+    <div>
+        <div id="inventory" class="inventory">
+            <div class="inventory-header">
+                <h2>Inventaire</h2>
+            </div>
+            <div class="inventory-content">
+                <div class="inventory-item" *ngFor="let item of items">
+                    <div class="item" (click)="fillInputFields(item); scrollToCalculateSection()">
+                        <p>{{item.name}}</p>
+                        <div class="itemSpec">
+                            <p>{{item.quantity}}</p>
+                            <p>{{item.unit}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="fButton">
+            <a>Importer un CSV</a>
+            <a (click)="exportCSV()">Exporter un CSV</a>
+            <a>Imprimer</a>
+        </div>
     </div>
+    
 </main>

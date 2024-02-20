@@ -1,3 +1,29 @@
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.fButton{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px ;
+}
+
+.fButton a{
+    text-decoration: none;
+    color: #fff;
+    background: #075985;
+    padding: 20px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
 main{
     width: 90%;
     display: flex;
@@ -22,8 +48,6 @@ main{
 .grid div{
     width: 70px;
     height: 50px;
-    background-color: transparent;
-    border: 1px solid #000;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -42,28 +66,119 @@ input{
 .result{
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .result select{
     width:55px;
     height: 53px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+    text-align: center;
 }
+
+
 .separateur{
     width: 2px;
     height: 80vh;
     background: grey;
 }
 .inventory{
-    width: 50%;
-    height: 80vh;
-    border: 1px solid #000;
+    width: 100%;
+    height: 60vh;
+    /* border: 1px solid #000; */
+    border-radius: 10px;
+    background: #fafafa;
+    padding: 10px;
+    overflow: scroll;
 }
-
+.inventory-item{
+    display: flex;
+    flex-flow: column;
+    background: #e5e7eb;
+    border-radius: 5px;
+    gap: 10px;
+    margin: 20px 0px;
+}
 .inventory-item .item{
     display: flex; 
     justify-content: space-between;
-    margin: 0 20px;
+    padding: 15px 20px;
+    border: none;
 }
 .itemSpec{
     display: flex;
 }
+
+.item{
+    border: 1px solid #000;
+    border-radius: 15px;
+}
+.inventory-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+
+}
+
+.navMenuMobile{
+    display: none;
+}
+.btn{
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    background: #e3e3e3;
+}
+.btn.functions{
+    background-color: #075985;
+    color: #fafafa;
+}
+@media (max-width: 428px){
+    main{
+        flex-flow: column;
+        gap: 20px;
+        height: 100%;
+        margin-bottom: 100px;
+    }
+    .separateur{
+        display: none;
+    }
+
+    .container{
+        height: 100vh;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+    #inventory{
+        width: 98%;
+        height: 70vh;
+    }
+
+    .navMenuMobile{
+        display: inline-block;
+        position: fixed;
+        bottom: 0;
+        height: 50px;
+        width: 100%;
+        background-color: #075985;
+        color: #fff;
+    }
+    .navMenuMobile-content{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+    }
+    .navMenuMobile-content-item a {
+        color: #fff;
+        list-style: none;
+        text-decoration: none;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 600;
+    }
+}
+
