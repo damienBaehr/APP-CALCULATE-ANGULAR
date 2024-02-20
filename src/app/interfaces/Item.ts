@@ -1,7 +1,7 @@
 import { UnitOptions } from "./UnitOptions";
 
 export interface Item{
-    id: number;
+    id?: number;
     name: string;
     quantity: number;
     calcul?: string;

@@ -64,7 +64,8 @@
             </div>
         </div>
         <div class="fButton">
-            <a >Importer un CSV</a>
+            <input hidden #inputImport type="file" (change)="importCSV($event)">
+            <a (click)="inputImport.click()">Importer un CSV</a>
             <a (click)="exportCSV()">Exporter un CSV</a>
             <a (click)="print()">Imprimer</a>
         </div>

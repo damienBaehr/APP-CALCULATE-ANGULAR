@@ -27,19 +27,19 @@ export class AppComponent {
   result = '';
   items : Item[] = [];
   rows = Object.keys(this.items)
-  currentID : number | null = null;
+  currentID : number | undefined = undefined;
   csvContent = "data:text/csv;charset=utf-8,"
 
   constructor( ) { 
       let items = localStorage.getItem("items");
       if(items){
         let parsedItems = JSON.parse(items)
-        this.items = parsedItems
+        this.items = parsedItems ?? [];
       }
   }
 
   exportCSV() {
-    let encodeUri = encodeURI(this.csvContent + ['title, ', 'quantity, ', 'unit'] + '\n' + this.items.map(e => e.name + ', ' + e.quantity + ', ' + e.unit).join('\n'));
+    let encodeUri = encodeURI(this.csvContent + ['id','title, ', 'quantity, ', 'unit'] + '\n' + this.items.map(e => e.id + ', ' + e.name + ', ' + e.quantity + ', ' + e.unit).join('\n'));
     let link = document.createElement('a');
     link.setAttribute('href', encodeUri);
     link.setAttribute('download', 'inventaire.csv');
@@ -68,15 +68,6 @@ export class AppComponent {
     window.print();
   }
 
-  updateItem(item: Item) {
-    let index = this.items.findIndex(i => i.id === item.id);
-    const existingItem = this.items[index];
-    existingItem.name = item.name;
-    existingItem.quantity = item.quantity;
-    existingItem.unit = item.unit;
-    localStorage.setItem("items", JSON.stringify(this.items))
-  }
-
   addToInput(value :string){
     if (value === 'x') {
       this.inputValue += '*';
@@ -84,6 +75,37 @@ export class AppComponent {
       this.inputValue += value;
     }  
   }
+  importCSV(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.readAsText(file, 'UTF-8');
+        reader.onload = () => {
+          const csvData: string = reader.result as string;
+          const lines: string[] = csvData.split('\n');
+    
+          lines.shift();
+    
+          lines.forEach((line, index) => {
+            const columns: any[] = line.split(',');
+            if (columns.length === 4) {
+              const id : number = columns[0] ?? null;
+              const name: string = columns[1];
+              const quantity: number = columns[2];
+              const unit: UnitOptions | undefined = columns[3];
+              this.items.push({ id, name, quantity, unit });
+            } else {
+
+            }
+          });
+          localStorage.setItem("items", JSON.stringify(this.items));
+        };
+    
+        reader.onerror = (evt) => {
+            console.error("Error reading file");
+        };
+    }
+}
   clearInput() {
     this.inputName='';
     this.inputValue = '';
@@ -127,7 +149,7 @@ export class AppComponent {
         });
       }
       localStorage.setItem("items", JSON.stringify(this.items));
-      this.currentID = null;
+      this.currentID = undefined;
     } catch (e) {
       console.log(e);
       this.result = 'Error';
