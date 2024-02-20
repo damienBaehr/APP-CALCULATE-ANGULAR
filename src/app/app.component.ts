@@ -27,6 +27,7 @@ export class AppComponent {
   result = '';
   items : Item[] = [];
   rows = Object.keys(this.items)
+  currentID : number | null = null;
   csvContent = "data:text/csv;charset=utf-8,"
 
   constructor( ) { 
@@ -88,11 +89,13 @@ export class AppComponent {
     this.inputValue = '';
     this.result = '';
   }
+  
   fillInputFields(item: Item) {
+    this.currentID = item.id;
     this.inputName = item.name;
-    this.inputValue = item.quantity.toString();
+    this.inputValue = item.calcul ?? '';
     this.selectedUnit = item.unit;
-    this.result="";
+    this.result= item.quantity.toString() ?? '';
   }
   scrollToCalculateSection() {
     const calculateSection = document.getElementById('calculate');
@@ -103,18 +106,32 @@ export class AppComponent {
   calculateResult() {
     try {
       this.result = eval(this.inputValue);
+      if (this.currentID) {
+        const index = this.items.findIndex(i => i.id === this.currentID);
+        if (index !== -1) {
+          this.items.splice(index, 1, {
+            id: this.currentID,
+            name: this.inputName,
+            quantity: parseInt(this.result),
+            unit: this.selectedUnit,
+            calcul: this.inputValue
+          });
+        } 
+      } else {
         this.items.push({
           id: this.items.length + 1,
           name: this.inputName,
           quantity: parseInt(this.result),
-          unit: this.selectedUnit
-        })
-        localStorage.setItem("items", JSON.stringify(this.items))
-      
+          unit: this.selectedUnit,
+          calcul: this.inputValue
+        });
+      }
+      localStorage.setItem("items", JSON.stringify(this.items));
+      this.currentID = null;
     } catch (e) {
-      console.log(e)
+      console.log(e);
       this.result = 'Error';
     }
- 
   }
+  
 }
