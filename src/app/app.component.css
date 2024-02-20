@@ -53,3 +53,17 @@ input{
     height: 80vh;
     background: grey;
 }
+.inventory{
+    width: 50%;
+    height: 80vh;
+    border: 1px solid #000;
+}
+
+.inventory-item .item{
+    display: flex; 
+    justify-content: space-between;
+    margin: 0 20px;
+}
+.itemSpec{
+    display: flex;
+}
