@@ -1,0 +1,36 @@
+<main>
+    <div class="container">
+        <div class="entries">
+            <input id="articleName" type="text">
+            <input id="operation" type="text">
+            <div class="result">
+                <input type="text" readonly>
+                <select>
+                    <option *ngFor="let option of unitOptions" [value]="option">{{option}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid">
+            <div (click)="addToInput('(')" data-index="(">(</div>
+            <div (click)="addToInput(')')" data-index=")">)</div>
+            <div (click)="addToInput('AC')" data-index="AC">AC</div>
+            <div (click)="addToInput('%')" data-index="%">%</div>
+            <div (click)="addToInput('7')" data-index="7">7</div>
+            <div (click)="addToInput('8')" data-index="8">8</div>
+            <div (click)="addToInput('9')" data-index="9">9</div>
+            <div (click)="addToInput('x')" data-index="x">x</div>
+            <div (click)="addToInput('4')" data-index="4">4</div>
+            <div (click)="addToInput('5')" data-index="5">5</div>
+            <div (click)="addToInput('6')" data-index="6">6</div>
+            <div (click)="addToInput('-')" data-index="-">-</div>
+            <div (click)="addToInput('1')" data-index="1">1</div>
+            <div (click)="addToInput('2')" data-index="2">2</div>
+            <div (click)="addToInput('3')" data-index="3">3</div>
+            <div (click)="addToInput('+')" data-index="+">+</div>
+            <div (click)="addToInput('0')" data-index="0">0</div>
+            <div data-index="=">=</div>
+            <div>-></div>
+        </div>
+    </div>
+    <div class="separateur"></div>
+</main>
