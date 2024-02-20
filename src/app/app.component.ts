@@ -46,6 +46,27 @@ export class AppComponent {
     link.click();
   }
 
+  print(){
+    let htmlReport = "<table>";
+    htmlReport += "<tr>";
+    htmlReport += "<th>Produit</th>";
+    htmlReport += "<th>Quantité</th>";
+    htmlReport += "<th>Unité</th>";
+    htmlReport += "</tr>";
+    for (let i = 0; i < this.items.length; i++) {
+      htmlReport += "<tr>";
+      htmlReport += "<td>" + this.items[i].name + "</td>";
+      htmlReport += "<td>" + this.items[i].quantity + "</td>";
+      htmlReport += "<td>" + this.items[i].unit + "</td>";
+      htmlReport += "</tr>";
+    }
+    htmlReport += "</table>";
+
+    window.document.write(htmlReport);
+    window.document.close();
+    window.print();
+  }
+
   updateItem(item: Item) {
     let index = this.items.findIndex(i => i.id === item.id);
     const existingItem = this.items[index];

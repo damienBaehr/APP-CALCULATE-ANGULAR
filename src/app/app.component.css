@@ -68,9 +68,15 @@ input{
     align-items: center;
     gap: 10px;
 }
-
+.result input{
+    width: 80%;
+}
+.result input option{
+    width: 100%;
+    padding: 20px;
+}
 .result select{
-    width:55px;
+    width: 20%;
     height: 53px;
     appearance: none;
     -webkit-appearance: none;
@@ -130,7 +136,8 @@ input{
     border-radius: 10px;
     cursor: pointer;
     border: none;
-    background: #e3e3e3;
+    background: #e5e7eb;
+    ;
 }
 .btn.functions{
     background-color: #075985;
